@@ -1,0 +1,32 @@
+Association:
+Association represents a bi-directional relationship between two classes where one class is aware of the other. It is a generic term that does not specify the strength or purpose of the relationship.
+Example: Consider a Teacher class and a Student class. There is an association between them, as a teacher teaches students and students are taught by a teacher.
+class Teacher {
+public:
+    void teach(Student& student) {
+ 
+    }
+};
+ 
+class Student {
+public:
+  
+};
+Aggregation:
+Aggregation is a specific type of association where one class contains another class as a part, but the contained class can exist independently of the container.
+Example: A University class may have an aggregation relationship with a Department class. A department can exist independently and can be part of one or more universities.
+class Department {
+public:
+}; 
+class University {
+private:
+    std::vector<Department> departments;  
+public:
+    void addDepartment(const Department& department) {
+        departments.push_back(department);
+    }
+};
+Composition:
+Composition is a stronger form of aggregation where the lifetime of the contained object is dependent on the container. If the container is destroyed, the contained object is also destroyed.
+Example: Consider a Car class composed of Engine, Wheel, and Chassis classes. If the car is destroyed, its components are also destroyed.
+
