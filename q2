@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+ 
+class Vehicle {
+protected: 
+    std::string model_; 
+    int year_;
+public:
+    Vehicle(const std::string& model, int year) : model_(model), year_(year) {} 
+    virtual ~Vehicle() {}
+    virtual double calculateRentalCost(int days) const = 0;
+    virtual void displayInfo() const {
+        std::cout << "Model: " << model_ << ", Year: " << year_ << std::endl;
+    }
+ 
+};
+class Car : public Vehicle {
+private:
+    int passengerCapacity_;
+public:
+    Car(const std::string& model, int year, int passengerCapacity)
+        : Vehicle(model, year), passengerCapacity_(passengerCapacity) {}
+ 
+    double calculateRentalCost(int days) const override {
+     
+        return days * (50.0 + passengerCapacity_ * 5.0);
+    }
+    void displayInfo() const override {
+        std::cout << "Car - ";
+        Vehicle::displayInfo();
+        std::cout << "Passenger Capacity: " << passengerCapacity_ << std::endl;
+    }
+ 
+};
+class Truck : public Vehicle {
+private:
+    double cargoCapacity_;
+public:
+    Truck(const std::string& model, int year, double cargoCapacity)
+        : Vehicle(model, year), cargoCapacity_(cargoCapacity) {}
+    double calculateRentalCost(int days) const override {
+        return days * (100.0 + cargoCapacity_ * 10.0);
+    }
+    void displayInfo() const override {
+        std::cout << "Truck - ";
+        Vehicle::displayInfo();
+        std::cout << "Cargo Capacity: " << cargoCapacity_ << " tons" << std::endl;
+    }
+};
+int main() {
+    Circle c1(5.0);
+    Rectangle r1(4.0, 6.0);
+
+    Shape* shape1 = &c1;
+    Shape* shape2 = &r1;
+ 
+    std::cout << "Area of c1(Circle): " << shape1->calculateArea() << std::endl;
+    std::cout << "Area of r1(Rectangle): " << shape2->calculateArea() << std::endl;
+    return 0;
+}
