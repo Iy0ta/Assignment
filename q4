@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+ 
+using namespace std;
+ 
+class Product {
+private:
+    int productId;
+    string productName;
+    double price;
+ 
+public:
+    Product(int id, const string& name, double p) : productId(id), productName(name), price(p) {}
+ 
+    void displayProductDetails() const {
+        cout << "Product ID: " << productId << ", Name: " << productName << ", Price: $" << price << endl;
+    }
+ 
+    double getPrice() const {
+        return price;
+    }
+};
+ 
+class ShoppingCart {
+private:
+    static const int MAX_PRODUCTS = 10;
+    Product* products[MAX_PRODUCTS];
+    int numProducts;
+ 
+public:
+    ShoppingCart() : numProducts(0) {}
+ 
+    void addProduct(Product* product) {
+        if (numProducts < MAX_PRODUCTS) {
+            products[numProducts++] = product;
+        } else {
+            cout << "Cannot add more products. Cart is full." << endl;
+        }
+    }
+ 
+    void displayAllProducts() const {
+        cout << "Products in the shopping cart:" << endl;
+        for (int i = 0; i < numProducts; ++i) {
+            products[i]->displayProductDetails();
+        }
+    }
+ 
+    double calculateTotalCost() const {
+        double totalCost = 0.0;
+        for (int i = 0; i < numProducts; ++i) {
+            totalCost += products[i]->getPrice();
+        }
+        return totalCost;
+    }
+};
+ 
+class User {
+private:
+    int userId;
+    ShoppingCart* shoppingCart;
+ 
+public:
+    User(int id) : userId(id), shoppingCart(NULL) {}
+ 
+    void displayUserDetails() const {
+        cout << "User ID: " << userId << endl;
+        if (shoppingCart != NULL) {
+            cout << "User has a shopping cart." << endl;
+        } else {
+            cout << "User does not have a shopping cart." << endl;
+        }
+    }
+ 
+    void assignShoppingCart(ShoppingCart* cart) {
+        shoppingCart = cart;
+    }
+};
+ 
+int main() {
+    ShoppingCart cart;
+    Product product1(1, "Laptop", 999.99);
+    Product product2(2, "Smartphone", 499.99);
+    Product product3(3, "Headphones", 79.99);
+ 
+    cart.addProduct(&product1);
+    cart.addProduct(&product2);
+    cart.addProduct(&product3);
+ 
+    User user1(101);
+    user1.assignShoppingCart(&cart);
+ 
+    user1.displayUserDetails();
+    cart.displayAllProducts();
+ 
+    cout << "Total Cost: $" << cart.calculateTotalCost() << endl;
+ 
+    return 0;
+}
+
